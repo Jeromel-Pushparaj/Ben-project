@@ -15,7 +15,7 @@ adminToken = data['adminToken']
 client1Token = data['client1Token']
 previouseorder = 0
 
-#get the order list from the api - GET
+# Function to send the request GET order list from the api
 def getorderlist(token):
     url = "https://api.dhan.co/orders"
 
@@ -88,7 +88,7 @@ def placeorder():
         
 
     
-
+# Function to send a POST request to API For the cancelling api
 def postcancelorder(orderid,clienttoken):
     conn = http.client.HTTPSConnection("api.dhan.co")
 
@@ -105,13 +105,14 @@ def postcancelorder(orderid,clienttoken):
     print(data.decode("utf-8"))
     
 
-
+# Function to find the order in the client order list which admin cancel
 def findorder(list_of_dicts, key, value):
     for index, dictionary in enumerate(list_of_dicts):
         if key in dictionary and dictionary[key] == value:
             return index
     return None
 
+# Function to process the cancelorder 
 def cancelorder():
     orderList = getorderlist(adminToken)
     firstdict = orderList[0]
@@ -135,7 +136,7 @@ def cancelorder():
 
 
 
-
+# Here is main function is starting.
 delay_seconds = 0.5
 
 orderlist = getorderlist(adminToken)
