@@ -4,17 +4,18 @@ import json
 import requests
 from datetime import datetime
 
-# Path to the JSON file
+# geting the validation datas
 json_file_path = "D:\\linuxplayground\\Ben project conf\\data.json"
 
 # Read data from the JSON file
 with open(json_file_path, "r") as json_file:
     data = json.load(json_file)
 
-# Print the data
 adminToken = data['adminToken']
 client1Token = data['client1Token']
 previouseorder = 0
+
+#get the order list from the api - GET
 def getorderlist(token):
     url = "https://api.dhan.co/orders"
 
@@ -32,7 +33,7 @@ def getorderlist(token):
     
 
 
-
+# Function to get the order detail From the api.
 def getorderdetail(token):
     # getting the latest order
     conn = http.client.HTTPSConnection("api.dhan.co")
@@ -49,13 +50,11 @@ def getorderdetail(token):
 
     print(data.decode("utf-8"))
 
-# def dupordercheck(clienttoken):
-    
-    
 
+# Function to send a request Post order through API
 def postorder(payload,clienttoken):
+    
     #WITH EXTRACTED DATA WE ORDER FOR THE OTHER CLIENTS.
-
     conn = http.client.HTTPSConnection("api.dhan.co")
 
     headers = {
@@ -74,6 +73,7 @@ def postorder(payload,clienttoken):
     print(res)
     return orderid
 
+# Function to Process and retriving a order detail and create the payload for the post order API 
 def placeorder():
     orderlist = getorderlist(adminToken)
     firstdict = orderlist[0]
@@ -90,8 +90,6 @@ def placeorder():
     
 
 def postcancelorder(orderid,clienttoken):
-
-
     conn = http.client.HTTPSConnection("api.dhan.co")
 
     headers = {
@@ -105,6 +103,8 @@ def postcancelorder(orderid,clienttoken):
     data = res.read()
 
     print(data.decode("utf-8"))
+    
+
 
 def findorder(list_of_dicts, key, value):
     for index, dictionary in enumerate(list_of_dicts):
