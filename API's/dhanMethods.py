@@ -138,11 +138,14 @@ def cancelorder():
 
 # Here is main function is starting.
 delay_seconds = 0.5
-
+#Geting the admin orderlist from the getorderlist function
 orderlist = getorderlist(adminToken)
+
+# Get the initial size of the orderlist
 openlistlen = len(orderlist)
 firstdict = orderlist[0]
 
+# Geting the OrderId from the client to prevent the duplicate order while looping
 corderlist = getorderlist(client1Token)
 cfirstdict = corderlist[0]
 previouseorder = cfirstdict['orderId']
@@ -157,10 +160,15 @@ while(1):
     time.sleep(delay_seconds)
     n+=1
     print(n)
+    
+    # In this condition we check the admin orderlist is updated or not by the increase in the size of the list
     if(openlistlen < len(getorderlist(adminToken))):
         previouseorder = 0
         openlistlen = len(getorderlist(adminToken))
+        # If this condition was true which admin order stock means it reflect in the orderlist so order function will trigger
         previouseorder = placeorder()
+    
+    # This if statement is too verify and to avoid the duplicate entry of orders
     if(previouseorder == cfirstdict['orderId'] and openlistlen == len(getorderlist(adminToken))):
         continue 
     
