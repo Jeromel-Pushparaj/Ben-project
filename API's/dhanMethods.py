@@ -154,6 +154,7 @@ if __name__ == "__main__":
     while(1):
         # orderlist = getorderlist(adminToken)
         firstdict = orderlist[0]
+        print(firstdict['orderId'])
         corderlist = getorderlist(client1Token)
         cfirstdict = corderlist[0]
         print(previouseorder)
@@ -176,6 +177,7 @@ if __name__ == "__main__":
         #     cancelorder()
         # else:
         #     print("there is no orderwhich calculate this")
+        
     
         
 
