@@ -5,7 +5,7 @@ import requests
 from datetime import datetime
 
 # geting the validation datas
-json_file_path = "D:\\linuxplayground\\Ben project conf\\data.json"
+json_file_path = "D:\\play ground\\Ben project conf\\data.json"
 
 # Read data from the JSON file
 with open(json_file_path, "r") as json_file:
