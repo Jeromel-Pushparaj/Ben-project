@@ -82,6 +82,7 @@ def placeorder():
     elif(firstdict['afterMarketOrder']==False):
         boolvalue = 'false'
     payload = f"{{\n \"dhanClientId\":\"{firstdict['dhanClientId']}\",\n \"correlationId\":\"{firstdict['correlationId']}\",\n \"transactionType\":\"{firstdict['transactionType']}\",\n \"exchangeSegment\":\"{firstdict['exchangeSegment']}\",\n \"productType\":\"{firstdict['productType']}\",\n \"orderType\":\"{firstdict['orderType']}\",\n \"validity\":\"{firstdict['validity']}\",\n \"tradingSymbol\":\"{firstdict['tradingSymbol']}\",\n \"securityId\":\"{firstdict['securityId']}\",\n \"quantity\":{firstdict['quantity']},\n \"disclosedQuantity\":{firstdict['disclosedQuantity']},\n \"price\": {firstdict['price']},\n \"triggerPrice\":{firstdict['triggerPrice']},\n \"afterMarketOrder\":{boolvalue},\n \"amoTime\": \"OPEN\",\n \"boProfitValue\":{firstdict['boProfitValue']},\n \"boStopLossValue\":{firstdict['boStopLossValue']},\n \"drvExpiryDate\":\"{firstdict['drvExpiryDate']}\",\n \"drvOptionType\":\"{firstdict['drvOptionType']}\",\n \"drvStrikePrice\": {firstdict['drvStrikePrice']}\n}}"
+    print(payload)
     if(firstdict['productType']=='INTRADAY'):
             prevorder = postorder(payload,client1Token)
     return prevorder
@@ -177,7 +178,9 @@ if __name__ == "__main__":
     #     #     cancelorder()
     #     # else:
     #     #     print("there is no orderwhich calculate this")
-    print(getorderlist(adminToken))
+    getorderlist(adminToken)
+    placeorder()
+    
          
         
     
