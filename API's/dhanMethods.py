@@ -74,9 +74,7 @@ def postorder(payload,clienttoken):
     return orderid
 
 # Function to Process and retriving a order detail and create the payload for the post order API 
-def placeorder():
-    orderlist = getorderlist(adminToken)
-    firstdict = orderlist[0]
+def placeorder(firstdict):
     if(firstdict['afterMarketOrder']==True):
         boolvalue = 'true'
     elif(firstdict['afterMarketOrder']==False):
@@ -124,8 +122,7 @@ def cancelorder():
     orderid = orderToCancel['orderId']
     postcancelorder(orderid, client1Token)
     
-   
-    
+
 
     
 # n =0
@@ -147,22 +144,25 @@ if __name__ == "__main__":
 
     n = 0
     while(1):
-        # orderlist = getorderlist(adminToken)
-        firstdict = orderlist[0]
-        print(firstdict['orderId'])
+        orderlist = getorderlist(adminToken)
         corderlist = getorderlist(client1Token)
+        print(orderlist,"\n\n\n")
+        print(corderlist,"\n\n\n")
+        print(len(orderlist),len(corderlist))
+        if(len(orderlist)==0 and len(corderlist)==0):  
+            continue
+        firstdict = orderlist[0]
         cfirstdict = corderlist[0]
         time.sleep(delay_seconds)
         n+=1
         print(n)
-        neworderlist = len(getorderlist(adminToken));
-        
-    
+        neworderlist = len(orderlist);
+
+            
        # In this condition we check the admin orderlist is updated or not by the increase in the size of the list
         if(openlistlen < neworderlist):
-            previouseorder = 0
             # If this condition was true which admin order stock means it reflect in the orderlist so order function will trigger
-            placeorder()
+            placeorder(firstdict)
             openlistlen = neworderlist
     
         # if(firstdict['orderStatus'] == 'CANCELLED'):
