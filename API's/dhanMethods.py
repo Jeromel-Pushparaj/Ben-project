@@ -17,6 +17,7 @@ previouseorder = 0
 
 # Function to send the request GET order list from the api
 def getorderlist(token):
+    start = time.time()
     url = "https://api.dhan.co/orders"
 
     headers = {
@@ -29,6 +30,9 @@ def getorderlist(token):
     data = response.json()
     
     # print(data)
+    end = time.time()
+    total = end - start
+    print("getoderlist: ",total,"\n")
     return data
     
 
@@ -75,6 +79,7 @@ def postorder(payload,clienttoken):
 
 # Function to Process and retriving a order detail and create the payload for the post order API 
 def placeorder(firstdict):
+    start = time.time()
     if(firstdict['afterMarketOrder']==True):
         boolvalue = 'true'
     elif(firstdict['afterMarketOrder']==False):
@@ -83,6 +88,9 @@ def placeorder(firstdict):
     print(payload)
     if(firstdict['productType']=='INTRADAY'):
             prevorder = postorder(payload,client1Token)
+    end = time.time()
+    total = end - start
+    print("Placing order time: ", total)
     return prevorder
         
 
@@ -135,7 +143,7 @@ def cancelorder():
 
 if __name__ == "__main__":
     # Here is main function is starting.
-    delay_seconds = 0.5
+    delay_seconds = 0
     #Geting the admin orderlist from the getorderlist function
     orderlist = getorderlist(adminToken)
 
@@ -143,27 +151,31 @@ if __name__ == "__main__":
     openlistlen = len(orderlist)
 
     n = 0
-    while(1):
-        orderlist = getorderlist(adminToken)
-        corderlist = getorderlist(client1Token)
-        print(orderlist,"\n\n\n")
-        print(corderlist,"\n\n\n")
-        print(len(orderlist),len(corderlist))
-        if(len(orderlist)==0 and len(corderlist)==0):  
-            continue
-        firstdict = orderlist[0]
-        cfirstdict = corderlist[0]
-        time.sleep(delay_seconds)
-        n+=1
-        print(n)
-        neworderlist = len(orderlist);
-
+    print(getorderlist(adminToken),"\n\n")
+    print(getorderlist(client1Token))
+    # while(1):
+    #     start = time.time()
+    #     orderlist = getorderlist(adminToken)
+    #     corderlist = getorderlist(client1Token)
+    #     if(len(orderlist)==0 and len(corderlist)==0):  
+    #         continue
+    #     firstdict = orderlist[0]
+    #     cfirstdict = corderlist[0]
+    #     time.sleep(delay_seconds)
+    #     # n+=1
+    #     # print(n)
+    #     neworderlist = len(orderlist);
+        
             
-       # In this condition we check the admin orderlist is updated or not by the increase in the size of the list
-        if(openlistlen < neworderlist):
-            # If this condition was true which admin order stock means it reflect in the orderlist so order function will trigger
-            placeorder(firstdict)
-            openlistlen = neworderlist
+    #    # In this condition we check the admin orderlist is updated or not by the increase in the size of the list
+    #     if(openlistlen < neworderlist):
+    #         # If this condition was true which admin order stock means it reflect in the orderlist so order function will trigger
+    #         placeorder(firstdict)
+    #         openlistlen = neworderlist
+        
+    #     end = time.time()
+    #     total = end - start
+    #     print("Main Time complexity: ", total, "start time: ", start, "end time: ", end)
     
         # if(firstdict['orderStatus'] == 'CANCELLED'):
         #     cancelorder()
